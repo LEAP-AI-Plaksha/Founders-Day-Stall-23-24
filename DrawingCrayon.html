@@ -1,91 +1,124 @@
-<!-- FILEPATH: index.html -->
-
 <!DOCTYPE html>
+
 <html>
-    <head>
-        <title>DancingCrayon</title>
-        <style>
-            /* CSS for left side */
-            .left-side {
-                display: flex;
-                flex-direction: column;
-                justify-content: top;
-                align-items: center;
-                width: 50%;
-                height: 100vh;
-                background-color: #f2f2f2;
-            }
-            .heading {
-                font-size: 3rem;
-                font-weight: bold;
-                margin-bottom: 1rem;
-            }
-            .subheading {
-                font-size: 1.5rem;
-                margin-bottom: 2rem;
-            }
-            .button-container {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                align-items: center;
-                width: 80%;
-            }
-            .button {
-                width: 100px;
-                height: 100px;
-                margin: 1rem;
-                background-color: #fff;
-                border: 2px solid #000;
-                border-radius: 10px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 1.2rem;
-                font-weight: bold;
-                cursor: pointer;
-            }
-            /* CSS for right side */
-            .right-side {
-                width: 50%;
-                height: 100vh;
-                background-image: url('https://via.placeholder.com/800x600');
-                background-size: cover;
-                background-position: center;
-                position: relative;
-            }
-            .click-photo {
-                position: absolute;
-                bottom: 20px;
-                right: 20px;
-                background-color: #fff;
-                border: 2px solid #000;
-                border-radius: 10px;
-                padding: 0.5rem 1rem;
-                font-size: 1.2rem;
-                font-weight: bold;
-                cursor: pointer;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="left-side">
-            <h1 class="heading">DancingCrayon</h1>
-            <h2 class="subheading">Bring your drawings to life</h2>
-            <h3 class="subheading">The AI club in Plaksha, LEAP presents a machine learning model which can rig up a photo and animate a drawing!</h3>
-            <div class="button-container">
-                <div class="button">Button 1</div>
-                <div class="button">Button 2</div>
-                <div class="button">Button 3</div>
-                <div class="button">Button 4</div>
-                <div class="button">Button 5</div>
-                <div class="button">Button 6</div>
-                <div class="button">Button 7</div>
-                <div class="button">Button 8</div>
-            </div>
-        </div>
-        <div class="right-side">
-            <div class="click-photo">Click Photo</div>
-        </div>
-    </body>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+  <title>DancingCrayon</title>
+</head>
+<style>
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 0.15fr);
+    gap: 5px;
+  }
+
+  .grid-item {
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    text-align: center;
+
+  }
+
+  .button-style {
+    width: 170px;
+    height: 170px;
+    margin: 0px;
+    background-color: rgba(169,169,169,255);
+    /* border: 1px solid #000; */
+    border-radius: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+
+  }
+
+  .left {
+    width: 45vw;
+  }
+  .head{
+    margin-left: 24px;
+    margin-bottom: 50px;
+  }
+  h1{
+    font-size: 90px;
+    margin: 0px;
+    padding: 0px;
+  }
+  body{
+    font-family: Inter;
+  }
+  h4{
+    font-size: 24px;
+    margin: 0px;
+    padding: 0px;
+    font-weight: normal;
+  }
+  .body{
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .des{
+    margin-bottom: 10px;
+    font-size: large;
+  }
+  .animation{
+    margin-bottom: 50px;
+    font-weight: bold;
+    margin-top: 30px;
+    font-size: large;
+  }
+  .bold{
+    font-weight: bold;
+  
+  }
+  .click-photo{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgb(64,124,252);
+    /* border: 1px solid #000; */
+    border-radius: 180px;
+    padding: 1.5rem 2.5rem;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+  }
+</style>
+
+
+<body>
+  <div class="left">
+    <div class="head">
+      <h1>DancingCrayon</h1>
+      <h4 class="sub">Bring your drawings to life</h4>
+    </div>
+    <div class="body">
+      <div class="des">The AI club in Plaksha, <span class="bold">LEAP</span> presents a machine learning model which can rig up a
+        photo and animate a drawing!</div>
+      <div class="animation">Lets start by drawing a drawing you wish to animate</div>
+      <div class="animationbuttongroup grid-container">
+
+        <button class="grid-item button-style"></button>
+        <button class="grid-item button-style"></button>
+        <button class="grid-item button-style"></button>
+        <button class="grid-item button-style"></button>
+        <button class="grid-item button-style"></button>
+        <button class="grid-item button-style"></button>
+        <button class="grid-item button-style"></button>
+        <button class="grid-item button-style"></button>
+      </div>
+    </div>
+    <div class="footer"></div>
+  </div>
+  <div class="right">
+    <div class="click-photo">Click Photo</div>
+  </div>
+</body>
+
 </html>
