@@ -14,6 +14,9 @@
   <title>DancingCrayon</title>
 </head>
 <style>
+  * {
+    transition: 1s ease-in-out all;
+  }
   .grid-container {
     display: grid;
     grid-template-columns: repeat(4, 0.15fr);
@@ -44,7 +47,9 @@
   }
 
   .left {
-    width: 45vw;
+    
+  }
+  .right {
   }
   .head{
     margin-left: 37px;
@@ -83,23 +88,39 @@
     font-weight: bold;
   
   }
-  .click-photo{
+  #click-photo{
     position: absolute;
     bottom: 20px;
     right: 20px;
     background-color: #005DFF;
-    /* border: 1px solid #000; */
+    border: 1px solid #005Dff;
     border-radius: 180px;
     padding: 1.5rem 2.5rem;
     font-size: 2rem;
     font-weight: bold;
     color: white;
     cursor: pointer;
+
+    
+  }
+
+  #video-player {
+    width:45vw;
+    height: 100vh;
+  }
+
+  .holder {
+    display: flex;
+  }
+
+  body {
+    margin: 0
   }
 </style>
 
 
 <body>
+  <div class="holder">
   <div class="left">
     <div class="head">
       <h1>DancingCrayon</h1>
@@ -124,8 +145,64 @@
     <div class="footer"></div>
   </div>
   <div class="right">
-    <div class="click-photo" onclick="handleButtonClick()">Click Photo</div>
+    <video id="video-player" muted autoplay></video>
+    <div id="canvas-holder" style="display:none">
+      <!--<h6>Captured snapshot</h6>-->
+      <canvas id="canvas"></canvas>
   </div>
+  </div>
+  <div id="click-photo" onclick="snapshot()">Click Photo</div>
+</div> 
 </body>
+
+<script type="text/javascript">
+  const video = document.getElementById('video-player');
+  var canvas = document.getElementById("canvas");
+  var canvas_holder = document.getElementById("canvas-holder");
+  var context = canvas.getContext("2d");
+
+  //w-width,h-height
+  var w, h;
+  canvas.style.display = "none";
+
+  //new
+  function snapshot(){
+      console.log("snapshot taken")
+
+      context.fillRect(0, 0, w, h);
+      context.drawImage(video, 0, 0, w, h);
+      canvas.style.display = "block";
+      canvas_holder.style.display = "block";
+      video.style.display="none"
+      makeButtonsBlue();
+      document.getElementById("click-photo").style.backgroundColor = "#fff"
+      document.getElementById("click-photo").style.color = "#0066ff"
+  }
+  
+  makeButtonsBlue = () => {
+    for (element of document.getElementsByClassName("button-style")) {
+      console.log(element)
+      element.style.backgroundColor = "#0066ff"
+    }
+  }
+
+  window.navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then(stream => {
+          video.srcObject = stream;
+          video.onloadedmetadata = (e) => {
+              video.play();
+
+              //new
+              w = video.videoWidth;
+              h = video.videoHeight
+
+              canvas.width = w;
+              canvas.height = h;
+          };
+      })
+      .catch(error => {
+          alert('You have to enable the mike and the camera');
+      }); 
+</script>
 
 </html>
