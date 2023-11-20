@@ -3,7 +3,7 @@
 <html>
   
 <script>
-  function handleButtonClick() {
+  function fetchAnimation() {
     //empty
   }
 </script>
@@ -46,11 +46,17 @@
 
   }
 
-  .left {
-    
+  #capture {
+    width:100%;
+    height: 100vh;
   }
-  .right {
+
+  #video-player {
+    width:100vw;
+    height: 100vh;
+
   }
+
   .head{
     margin-left: 37px;
     margin-bottom: 50px;
@@ -62,6 +68,8 @@
   }
   body{
     font-family: Inter;
+    height:100vh;
+    width: 100vw;
   }
   h4{
     font-size: 24px;
@@ -132,26 +140,27 @@
       <div class="animation">Lets start by drawing a drawing you wish to animate</div>
       <div class="animationbuttongroup grid-container">
 
-        <button class="grid-item button-style" onclick="handleButtonClick()"></button>
-        <button class="grid-item button-style" onclick="handleButtonClick()"></button>
-        <button class="grid-item button-style" onclick="handleButtonClick()"></button>
-        <button class="grid-item button-style" onclick="handleButtonClick()"></button>
-        <button class="grid-item button-style" onclick="handleButtonClick()"></button>
-        <button class="grid-item button-style" onclick="handleButtonClick()"></button>
-        <button class="grid-item button-style" onclick="handleButtonClick()"></button>
-        <button class="grid-item button-style" onclick="handleButtonClick()"></button>
+        <button class="grid-item button-style" onclick="fetchAnimation()"></button>
+        <button class="grid-item button-style" onclick="fetchAnimation()"></button>
+        <button class="grid-item button-style" onclick="fetchAnimation()"></button>
+        <button class="grid-item button-style" onclick="fetchAnimation()"></button>
+        <button class="grid-item button-style" onclick="fetchAnimation()"></button>
+        <button class="grid-item button-style" onclick="fetchAnimation()"></button>
+        <button class="grid-item button-style" onclick="fetchAnimation()"></button>
+        <button class="grid-item button-style" onclick="fetchAnimation()"></button>
       </div>
     </div>
     <div class="footer"></div>
   </div>
   <div class="right">
     <video id="video-player" muted autoplay></video>
-    <div id="canvas-holder" style="display:none">
+    <img id="capture" style="display:none">
+  </div>
+  <div id="click-photo" onclick="snapshot()">Click Photo</div>
+  <div id="canvas-holder" style="display:none">
       <!--<h6>Captured snapshot</h6>-->
       <canvas id="canvas"></canvas>
   </div>
-  </div>
-  <div id="click-photo" onclick="snapshot()">Click Photo</div>
 </div> 
 </body>
 
@@ -159,7 +168,10 @@
   const video = document.getElementById('video-player');
   var canvas = document.getElementById("canvas");
   var canvas_holder = document.getElementById("canvas-holder");
+  var capture = document.getElementById("capture")
   var context = canvas.getContext("2d");
+
+  var img_dataURL = canvas.toDataURL('image/png')
 
   //w-width,h-height
   var w, h;
@@ -171,9 +183,10 @@
 
       context.fillRect(0, 0, w, h);
       context.drawImage(video, 0, 0, w, h);
-      canvas.style.display = "block";
-      canvas_holder.style.display = "block";
+      img_dataURL = canvas.toDataURL('image/png')
       video.style.display="none"
+      capture.src = img
+      capture.style.display = "block"
       makeButtonsBlue();
       document.getElementById("click-photo").style.backgroundColor = "#fff"
       document.getElementById("click-photo").style.color = "#0066ff"
@@ -201,8 +214,33 @@
           };
       })
       .catch(error => {
-          alert('You have to enable the mike and the camera');
-      }); 
+          alert('You have to enable the microphone and the camera');
+      });
+    
+  fetchAnimation = () => {
+    var formData = new FormData();
+    formData.append("file", dataURLtoBlob(img_dataURL));
+
+    fetch(`${BASE_URL}/api/animate?animation=1`,{
+      method:'PUT',
+      body : formData
+    })
+    .then (response => console.log(response))
+  }
+
+  dataURLtoBlob = dataURI => {
+    var byteString = atob(dataURI.split(',')[1]);
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    var blob = new Blob([ab], {type: mimeString});
+    return blob;
+  }
 </script>
 
 </html>
