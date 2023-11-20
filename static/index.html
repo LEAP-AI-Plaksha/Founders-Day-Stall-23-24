@@ -222,12 +222,22 @@
     formData.append("file", dataURLtoBlob(img_dataURL));
 
     console.log(formData);
-    var BASE_URL = "http://localhost:5000"
+    var BASE_URL = "http://127.0.0.1:3000"
     fetch(`${BASE_URL}/api/animate?animation=1`,{
       method:'PUT',
       body : formData
     })
-    .then (response => console.log(response))
+    .then (response => {
+      // gif 
+      var path = response.json().then(data => {
+        
+        var gif = document.createElement("img");
+        gif.src = data.gif_path;
+        document.body.appendChild(gif);
+        return data.gif_path;
+      })
+      // put gif in html
+    })
   }
 
   dataURLtoBlob = dataURI => {
