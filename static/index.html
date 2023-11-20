@@ -221,6 +221,8 @@
     var formData = new FormData();
     formData.append("file", dataURLtoBlob(img_dataURL));
 
+    console.log(formData);
+    var BASE_URL = "http://localhost:5000"
     fetch(`${BASE_URL}/api/animate?animation=1`,{
       method:'PUT',
       body : formData
