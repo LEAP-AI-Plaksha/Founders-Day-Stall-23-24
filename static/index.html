@@ -185,7 +185,7 @@
       context.drawImage(video, 0, 0, w, h);
       img_dataURL = canvas.toDataURL('image/png')
       video.style.display="none"
-      capture.src = img
+      capture.src = img_dataURL
       capture.style.display = "block"
       makeButtonsBlue();
       document.getElementById("click-photo").style.backgroundColor = "#fff"
